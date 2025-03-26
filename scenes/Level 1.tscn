@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://djg8yf5la4w1m"]
+
+[ext_resource type="PackedScene" uid="uid://7ulw5jucgv1w" path="res://scenes/Player.tscn" id="1_jx07q"]
+[ext_resource type="PackedScene" uid="uid://3jpw3lrltfk3" path="res://scenes/World 1.tscn" id="2_21ior"]
+[ext_resource type="PackedScene" uid="uid://08h5qxrqlsh6" path="res://scenes/Area.tscn" id="3_5neht"]
+[ext_resource type="PackedScene" uid="uid://c5x7r1tahwoas" path="res://scenes/ObjLamp.tscn" id="4_knj23"]
+
+[node name="Level 1" type="Node3D"]
+
+[node name="Area" parent="." instance=ExtResource("3_5neht")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -21.9093, 3.47173)
+
+[node name="Player" parent="." instance=ExtResource("1_jx07q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.77956, 22)
+
+[node name="World 1" parent="." instance=ExtResource("2_21ior")]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.55899, -2.98202)
+omni_range = 78.0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.55899, -35.982)
+omni_range = 78.0
+
+[node name="Area2" parent="." instance=ExtResource("3_5neht")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8, -57)
+
+[node name="ObjLamp" parent="." instance=ExtResource("4_knj23")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.1502, -46.8647)
