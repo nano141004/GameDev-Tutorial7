@@ -5,12 +5,15 @@ extends CharacterBody3D
 @export var gravity: float = 9.8
 @export var jump_power: float = 5.0
 @export var mouse_sensitivity: float = 0.3
+@export var sprint_speed: float = 15.0
+@export var crouch_speed: float = 5.0
 
 @onready var head: Node3D = $Head
 
 @onready var camera: Camera3D = $Head/Camera3D
 
 var camera_x_rotation: float = 0.0
+var is_crouching: bool = false
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -39,16 +42,28 @@ func _physics_process(delta):
 		movement_vector += head.basis.x
 
 	movement_vector = movement_vector.normalized()
+	
+	# Sprinting
+	var current_speed = speed
+	if Input.is_action_pressed("sprint") and not is_crouching:
+		current_speed = sprint_speed
 
-	velocity.x = lerp(velocity.x, movement_vector.x * speed, acceleration * delta)
-	velocity.z = lerp(velocity.z, movement_vector.z * speed, acceleration * delta)
+	# Crouching
+	if Input.is_action_pressed("crouch"):
+		is_crouching = true
+		current_speed = crouch_speed
+	else:
+		is_crouching = false
+
+	velocity.x = lerp(velocity.x, movement_vector.x * current_speed, acceleration * delta)
+	velocity.z = lerp(velocity.z, movement_vector.z * current_speed, acceleration * delta)
 
 	# Apply gravity
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
 	# Jumping
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor() and not is_crouching:
 		velocity.y = jump_power
 
 	move_and_slide()
